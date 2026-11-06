@@ -1,0 +1,27 @@
+# STM32CubeIDE build output
+Debug/
+Release/
+*.o
+*.d
+*.su
+*.cyclo
+*.elf
+*.map
+*.list
+*.hex
+*.bin
+
+# STM32CubeIDE / Eclipse user settings
+.settings/
+*.launch
+.metadata/
+.cproject.bak
+
+# Leftover toolchain folders from other IDEs
+EWARM/
+MDK-ARM/
+
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
