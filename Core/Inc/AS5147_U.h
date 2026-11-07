@@ -5,7 +5,7 @@
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
 
-/* Register addresses (verify against the AS5147U datasheet register table) */
+
 #define AS5147_U_NOP 0x0000
 #define AS5147_U_ERRFL 0x0001
 #define AS5147_U_PROG 0x0003
@@ -18,11 +18,14 @@
 #define AS5147_U_ZPOSM 0x0016
 #define AS5147_U_ZPOSL 0x0017
 #define AS5147_U_DATA_MASK 0x3FFF
+#define AS5147_U_CRC_INIT 0xC4
+#define AS5147_U_FV 0xFF
+#define AS5147_U_CRC_POLY 0x1D
 
-/* Command frame bits (16-bit mode, no CRC) */
+
 #define AS5147_U_READ_WRITE (1U<<14)
 
-/* Read data frame bits (16-bit mode, no CRC) */
+
 #define AS5147_U_RESP_EF (1U<<14)
 #define AS5147_U_RESP_WARN (1U<<15)
 
@@ -30,13 +33,13 @@ typedef struct {
 	SPI_HandleTypeDef *hspi;
 	GPIO_TypeDef	*cs_port;
 	uint16_t 		cs_pin;
-	uint16_t		last_rx;
+	uint32_t		last_rx;
 } as5147_u_t;
 
 typedef enum {
 	AS5147_U_OK = 0,
 	AS5147_U_ERR_SPI,
-	AS5147_U_ERR_CRC,	/* reserved for 24-bit CRC mode, unused in 16-bit mode */
+	AS5147_U_ERR_CRC,
 	AS5147_U_ERR_EF
 } as5147_u_status_t;
 
